@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import escapeRegexp from 'escape-string-regexp'
+import sortBy from 'sort-by'
 
 class ListContacts extends Component {
     static propTypes = {
