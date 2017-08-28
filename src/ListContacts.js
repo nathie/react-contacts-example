@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import escapeRegexp from 'escape-string-regexp'
+import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class ListContacts extends Component {
@@ -31,6 +31,19 @@ class ListContacts extends Component {
     }
 
     render() {
+        // Variable that will match the pattern
+        let showingContacts
+        if (this.state.query) {
+            // match is the result of a new instance of the regular expression
+            const match = new RegExp(escapeRegExp(this.state.query), 'i')
+            // showingContact will have the contacts that match the query
+            showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+        } else {
+            showingContacts = this.props.contacts
+        }
+
+        showingContacts.sort(sortBy('name'))
+
         return (
             <div className='list-contacts'>
                <div className='list-contacts-top'>
@@ -43,7 +56,7 @@ class ListContacts extends Component {
                </div>
 
                 <ol className='contact-list'>
-                    {this.props.contacts.map((contact) => (
+                    {showingContacts.map((contact) => (
                         <li key={contact.id} className='contact-list-item'>
                             <div className='contact-avatar' style={{
                                 backgroundImage: `url(${contact.avatarURL})`
