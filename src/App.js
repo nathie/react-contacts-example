@@ -18,9 +18,13 @@ class App extends Component {
 
   //Remove contact function
   removeContact = (contact) => {
+    // Removes contact from the view
     this.setState((state) => ({
         contacts: state.contacts.filter((c) => c.id !== contact.id)
     }))
+
+    // Removes contact from the API
+    ContactsAPI.remove(contact)
   }
   render() {
     return (
